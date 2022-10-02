@@ -1,0 +1,51 @@
+
+<!-------------------------------
+     navbar section start
+------------------------------->
+
+<header class="header fixed-top" id="header">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container ">
+        <a class="navbar-brand" href="/">
+          <img src="/img/navlogo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+          <span class="h3 text-primary">Recycle</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse justify-content-end ms-2 navbar-collapse" id="navbarNavDropdown">
+
+          <!-- search bar start -->
+          <form method="POST" action="/search" class="d-flex" role="search">
+            <input class="form-control border border-primary rounded-0 rounded-start me-0" type="search" placeholder="Search..." name="searchItem">
+            <button class="btn btn-primary rounded-0 rounded-end me-5" type="submit"> <i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+          <!-- search bar end -->
+
+          <ul class="navbar-nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fa-solid fa-comment"></i> Chat
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.html">
+                <i class="fa-solid fa-user"></i> Log in
+              </a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link btn btn-primary text-white" href="postAds.html">
+                <i class="fa-regular fa-plus"></i> SELL
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div> 
+    </nav>
+    <div class="floating-sell-btn position-fixed d-lg-none">
+      <a href=""><i class="fa-regular fa-plus text-white"></i></a>
+    </div>
+    <div class="floating-chat-btn position-fixed d-lg-none">
+      <a href=""><i class="fa-regular fa-comment text-white"></i></a>
+    </div>
+  </header>

@@ -1,0 +1,60 @@
+
+      <%- include('navbar'); -%>
+
+<!-- ---------------------------
+      browse categories section  
+      ------------------------------>
+      <section class="container mt-4 pt-5">
+        <div>
+          <h6 class="text-dark pt-4">Browse categories</h6>
+          <div class="row mt-1 gy-4">
+
+            <% if(categories != '' ) {%>
+              <% categories.forEach(function(category, index) { %>
+                <a href="/categories/<%= category.name %>" class="col-6 col-md-4 col-lg-3 d-flex align-items-center">
+                  <img src="/img/<%- category.image %>" alt="<%- category.name %>" width="40px">
+                  <p class="ms-2 pt-2 text-dark"><%- category.name %></p>
+                </a>
+              <% }) %>
+              <% } %>
+              
+          </div> 
+        </div>
+      </section>
+
+
+      
+  
+      <!------------------------------
+         Recommended Products section 
+         ------------------------------>
+      <section class="container mt-5">
+        <div>
+          <h6 class="text-dark mb-5">Recommended Products</h6>
+          <div class="row">
+
+            <% if(usedProduct != '') { %>
+              <% usedProduct.latest.forEach(function(product, index) { %>
+
+                <div class="col-6 col-md-4 col-lg-3">
+                  <a href="/product/<%= product._id %>" class="card border-primary h-80 rounded mx-auto d-block shadow p-3 mb-5 bg-body rounded" style="max-width: 15rem; max-height: 18rem;">
+                    <img src="/uploads/<%= product.image1 %>" class="card-img-top rounded img-size" alt="...">
+                    <div class="card-body">
+                      <h6 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><%= product.name %></h6>
+                      <p class="text-primary">৳ <%= product.price %></p>
+                      <p class="d-flex justify-content-between text-secondary pt-2"><small >Dhaka</small> <small>1 hour</small></p>
+                    </div>
+                  </a>
+                </div>
+              <% }) %>
+            <% } %>
+
+          </div>
+        </div>
+      </section>
+
+
+    <!-------------------------------
+         footer secton 
+   -------------------------------->
+      <%- include('footer'); -%>
