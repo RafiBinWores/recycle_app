@@ -42,7 +42,6 @@ exports.categoryPageById = async(req, res) => {
 
     try {
         let categoryId = req.params.id;
-        
         const limitNumber = 8;
         const categories = await Category.find({}).limit(limitNumber).sort({name: 1});
 
