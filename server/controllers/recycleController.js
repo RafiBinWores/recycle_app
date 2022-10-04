@@ -2,6 +2,7 @@ require('../models/database');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
 const { search } = require('../routes/recycleRoutes');
+const User = require('../models/User');
 
 
 // get / homepage
@@ -68,6 +69,36 @@ exports.searchProduct = async(req, res) =>{
     }
 
 }
+
+
+//get // userlogin
+exports.userLogin = async(req, res) =>{
+
+    res.render('login', {title: 'Recycle | Login'});
+}
+
+//post // user register
+exports.userRegister = async(req, res) =>{
+
+    res.render('register', {title: 'Recycle | Sign Up'});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
