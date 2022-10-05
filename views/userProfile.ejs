@@ -1,0 +1,75 @@
+<!-- navbar start  -->
+<%- include('navbar'); -%>
+<!-- navbar end  -->
+
+
+    <div class="category-container">
+        <div class="container mt-5 pt-5">
+            <h3 class="category-title">Rafi Bin Wores</h3>
+        </div>
+          
+            <div class="container d-flex gap-5 pt-3 flex-c">
+
+                <div class="account-sidebar">
+                    <div class="sidebar-profile-menu" >
+                        <h6 class="mb-3 border-bottom border-dark">Account</h6>
+                        <div class="sidebar-category-link ">
+                            <a class="d-flex ms-2 mb-3" style="font-size: 15px;" href="/userProfile">Profile</a>
+                            <a class="d-flex ms-2 mb-3" style="font-size: 15px;" href="/userAds">My Ads</a>
+                            <a class="d-flex ms-2 " style="font-size: 15px;" href="">Logout</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <h5>Settings</h5>
+                        </div>
+
+                      <div class="col-12">
+                        <div class="img-wrapper rounded mx-auto" style="width: 12rem; height: 12rem; border: 2px dashed gray; overflow: hidden;">
+                            <img src="" alt="" class="card-img-top">
+                            <i class="fa-solid fa-cloud-arrow-up text-primary pt-5" style="font-size: 3rem;"></i>
+                            <h6 class="text-info">No file chosen, yet!</h6>
+                        </div>
+                        <div class="profile-img-input">
+                            <input id="default-btn" type="file" hidden>
+                            <button onclick="defaultBtnActive()" id="custom-btn" class="btn btn-info mt-3" style="width: 12rem;">Choose a file</button>
+                        </div>
+                        <div class="mt-4">
+                            <h6>Username</h6>
+                            <input type="text" class="form-control mx-auto border-primary mt-3" id="" placeholder="Your Name" style="width: 20rem;">
+                        </div>
+                        <button type="button" class="btn btn-info mt-4" style="width: 20rem;">Update details</button>
+                      </div>
+                 
+                      <div class="col-12 mt-5">
+                        <h6>Change Password</h6>
+                        <form action="" method="post" class="mx-auto mt-3" style="width: 20rem;">
+              
+                          <div class="mb-4">
+                              <input type="password" class="form-control border-primary" id="exampleInputPassword1" placeholder="New Password">
+                          </div>
+                          <div class="mb-4">
+                              <input type="password" class="form-control border-primary" id="exampleInputPassword1" placeholder="Confirm Password">
+                              <div id="emailHelp" class="form-text">Password must be 8 digit long.</div>
+                          </div>
+                          
+                          
+                          <button type="submit" class="btn btn-info mt-3 mb-5" style="width: 100%;">Change Password</button>
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+            </div>
+    </div>
+
+
+    <!-- footer start  -->
+    <%- include('footer'); -%>
+
+
+
+

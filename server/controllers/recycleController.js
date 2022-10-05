@@ -71,6 +71,20 @@ exports.searchProduct = async(req, res) =>{
 }
 
 
+
+//get // userprofile page
+// exports.profilePage = async(req, res) =>{
+
+//     res.render('userProfile', {title: 'Recycle | Login'});
+// }
+
+// //get // user ads page 
+// exports.userAdsPage = async(req, res) =>{
+
+//     res.render('userAds', {title: 'Recycle | Login'});
+// }
+
+
 //get // userlogin
 exports.userLogin = async(req, res) =>{
 
@@ -82,6 +96,9 @@ exports.userRegister = async(req, res) =>{
 
     res.render('register', {title: 'Recycle | Sign Up'});
 }
+
+
+
 
 
 

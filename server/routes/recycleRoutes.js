@@ -12,6 +12,9 @@ routes.get('/product/:id', recycleController.productDetails);
 routes.get('/categories/:id', recycleController.categoryPageById);
 routes.post('/search', recycleController.searchProduct);
 
+// routes.get('/userProfile', recycleController.profilePage);
+// routes.get('/userAds', recycleController.userAdsPage);
+
 routes.get('/login', recycleController.userLogin);
 routes.get('/register', recycleController.userRegister);
 routes.post('/register', recycleController.userRegister);
