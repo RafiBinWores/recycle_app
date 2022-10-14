@@ -17,3 +17,18 @@ function clickimg(smallImg) {
 }
 
 // product page image changing click function end
+
+
+// logout function start
+
+function UserLogout() {
+    fetch("/", {
+      method: "DELETE",
+    });
+
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 1000);
+  }
+
+  // logout function end

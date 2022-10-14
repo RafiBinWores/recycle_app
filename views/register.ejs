@@ -1,32 +1,70 @@
 <div class="bg-image">
-  <div class="form-conainer bg-white shadow p-3 mb-5 bg-body rounded" style="width: 25rem;">
-      
+  <div
+    class="form-conainer bg-white shadow p-3 mb-5 bg-body rounded"
+    style="width: 25rem"
+  >
     <form action="" method="post">
+      
       <h3 class="d-flex justify-content-center mt-4 mb-5 fw-bolder">Sign Up</h3>
+
+      <% if(typeof message != 'undefined') { %>
+        <div class="alert alert-danger" role="alert">
+          <%= message %>
+        </div>
+      
+      <% } %>
       
       <div class="mb-4">
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
+        <input
+          name="email"
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          placeholder="Email"
+          aria-describedby="emailHelp"
+          required
+        />
       </div>
 
       <div class="mb-4">
-          <input
-           type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+        <input
+          name="password"
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          placeholder="Password"
+          required
+        />
       </div>
 
       <div class="mb-5">
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" required>
-          <div id="emailHelp" class="form-text">Password must be 8 digit long.</div>
+        <input
+          name="confirmpassword"
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          placeholder="Confirm Password"
+          required
+        />
+        <div id="emailHelp" class="form-text">
+          Password must be 8 digit long.
+        </div>
       </div>
-      
-      <button type="submit" class="btn btn-primary" style="width: 100%;">SIGN UP</button>
-        
+
+      <button type="submit" class="btn btn-primary" style="width: 100%">
+        SIGN UP
+      </button>
     </form>
-      <p class="text-center mt-3 text-secondary" style="font-size: 14px;">By continuing you agree to our <br><a href="" style="text-decoration: none;">Terms and Conditions</a></p>
+    <p class="text-center mt-3 text-secondary" style="font-size: 14px">
+      By continuing you agree to our <br /><a
+        href=""
+        style="text-decoration: none"
+        >Terms and Conditions</a>
+    </p>
 
-      <p class="mt-5" style="font-size: 14px;">Already a Recyclist? <a href="/login" style="text-decoration: none;" >SIGN IN</a> </p>
-
+    <p class="mt-5" style="font-size: 14px">
+      Already a Recyclist?
+      <a href="/login" style="text-decoration: none">SIGN IN</a>
+    </p>
   </div>
-
 </div>
-    
-      

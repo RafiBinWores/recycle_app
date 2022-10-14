@@ -1,0 +1,118 @@
+
+    <!--------------- navbar  --------------->
+    <nav class="navbar bg-light">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/img/navlogo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+            <span class="h3  text-primary">Recycle</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-------------------- form  --------------------->
+    <div class="container mt-5 pb-5 mb-5 border border-dark rounded form-container" style="max-width: 80%;">
+        <h3 class="border-bottom border-dark border-1 mt-4 ms-4 me-4 pb-3">Fill The Form</h3>
+        
+          <form method="post" class="row ms-5 me-5" >
+            <div class="col-12">
+                <h6 class="mt-5">Categorys</h6>
+                <select class="form-select border-dark border-1" aria-label="Default select example">
+                    <option selected>Choose Categorys</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Home & Living">Home & Living</option>
+                    <option value="Fashion & Beauty">Fashion & Beauty</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Toys">Toys</option>
+                    <option value="Bikes">Bikes</option>
+                    <option value="Books">Books</option>
+                  </select>
+            </div>
+
+            <div class="col-12">
+              <h6 class="mt-4">Locations</h6>
+              <select class="form-select border-dark border-1" aria-label="Default select example">
+                  <option selected>Choose Locations</option>
+                  <option value="Mobile">Mobile</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Home & Living">Home & Living</option>
+                  <option value="Fashion & Beauty">Fashion & Beauty</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Toys">Toys</option>
+                  <option value="Bikes">Bikes</option>
+                  <option value="Books">Books</option>
+                </select>
+          </div>
+
+            <div class="col-12">
+                <label for="InputText1" class="form-label mt-3">Ad Title</label>
+                <input type="text" class="form-control border-dark border-1" id="InputText1" aria-describedby="textHelp" required>
+            </div>
+
+            <div class="col-12">
+                <label for="InputText2" class="form-label mt-3">Brand</label>
+                <input type="text" class="form-control border-dark border-1" id="InputText2" aria-describedby="textHelp">
+            </div>
+
+            <div class="col-12">
+                <label for="InputNumber1" class="form-label mt-3"></i>Price <span>(&#2547;)</span></label>
+                <input type="number" class="form-control border-dark border-1" id="InputNumber1" aria-describedby="numberHelp" required>
+            </div>
+            
+            <div class="col-12 ">
+                <label for="Textarea1" class="form-label mt-3">Description </label>
+                <textarea class="form-control border-dark border-1" id="Textarea1" rows="6" placeholder="Include condition, features and reason for selling" required></textarea>
+            </div>
+
+                <div class="h4 pb-2 mb-4 border-bottom border-dark mt-5">
+                </div>
+                <h3 class="ms-5 mb-4 me-5 ">Add up to 4 photos</h3>
+            <div class="col-12 ">
+                <div class="mb-2">
+                    <input class="form-control border-bottom border-primary" type="file" id="formFile">
+                </div>
+                <div class="mb-2">
+                    <input class="form-control border-bottom border-primary" type="file" id="formFile">
+                </div>
+                <div class="mb-2">
+                    <input class="form-control border-bottom border-primary" type="file" id="formFile">
+                </div>
+                <div class="mb-2">
+                  <input class="form-control border-bottom border-primary" type="file" id="formFile">
+              </div>
+
+            </div>
+
+            <div class="h4 pb-2 mb-4 border-bottom border-dark mt-5">
+            </div>
+
+              <div class="col-12 ">
+                <h3>Contact Details</h3>
+                <div class="px-0">
+                    <p class="text-secondary">Name</p>
+                    <h6>Rafi Bin Wores</h6>
+                </div>
+                <div>
+                    <p class="text-secondary">Email</p>
+                    <h6>rafibinwores2203@gmail.com</h6>
+                </div>
+                <div>
+                    <label for="InputNumber1" class="form-label mt-3"></i>Add phone Number</label>
+                    <input type="number" class="form-control border-dark border-1" id="InputNumber1" aria-describedby="numberHelp" required>
+                </div>
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                    <label class="form-check-label" for="flexCheckIndeterminate">
+                        I have read and accept the <a href="" style="text-decoration: none;">Terms and Conditions</a>
+                    </label>
+                </div>
+              </div>
+            
+            <button type="button" class="btn mt-4 col-12  btn-primary" style="width: 10rem;">Post ad</button>
+            </div>
+          </form>
+    </div>
+
+
+    <%- include('footer'); -%> 
+    
