@@ -1,22 +1,25 @@
 const express = require('express');
 const routes = express.Router();
 const recycleController = require('../controllers/recycleController');
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+
+const { DecodeInformation, AuthCheck} = require("../controllers/Checker")
+
 
 // routers
-routes.get('/', recycleController.homepage);
-routes.get('/product/:id', recycleController.productDetails);
-routes.get('/categories/:id', recycleController.categoryPageById);
-routes.post('/search', recycleController.searchProduct);
+routes.get('/', DecodeInformation, recycleController.homepage);
+routes.get('/product/:id', DecodeInformation, recycleController.productDetails);
+routes.get('/categories/:id', DecodeInformation, recycleController.categoryPageById);
+routes.post('/search', DecodeInformation, recycleController.searchProduct);
 
 routes.get('/login', recycleController.userLogin);
 routes.get('/register', recycleController.userRegister);
-routes.post('/register', recycleController.userRegister);
+routes.get("/resetpassword",recycleController.userResetPassword);
+routes.get("/register/verified",recycleController.importentMessage);
+routes.get("/register/verify/:userId/:uniqueString",recycleController.verifyLink);
+routes.get("/sell",AuthCheck,recycleController.openSellForm);
+routes.post('/register', recycleController.userPostRegister);
+routes.post("/login",recycleController.postUserLogin);
 
-
-
+routes.delete("/",recycleController.LogoutUser);
 
 module.exports = routes;

@@ -1,25 +1,65 @@
+<div class="bg-image">
+  <div
+    class="form-conainer bg-white shadow p-3 mb-5 bg-body rounded"
+    style="width: 25rem"
+  >
+    <form action="" method="post">
+      <% if(typeof message != 'undefined') { %>
+      <label style="display: inline-block; text-align: center; width: 100%">
+        <span
+          id="msg"
+          style="color: rgb(238, 0, 0); margin: 1em 0; font-weight: bold"
+          ><%= message %></span
+        >
+        <br />
+        <br />
+      </label>
+      <% } %>
+      <h3 class="d-flex justify-content-center mt-5 mb-5 fw-bolder">Login</h3>
+      <div class="mb-4">
+        <input
+          name="useremail"
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          placeholder="Email"
+          aria-describedby="emailHelp"
+          required
+        />
+      </div>
+      <div class="mb-2">
+        <input
+          name="userpassword"
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <div class="mb-4 form-check">
+        <a
+          href="/resetpassword"
+          class="d-flex justify-content-end"
+          style="text-decoration: none; font-size: 14px"
+          >Forgot password?</a
+        >
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%">
+        SIGN IN
+      </button>
+    </form>
+    <p class="text-center mt-3 text-secondary" style="font-size: 14px">
+      By continuing you agree to our <br /><a
+        href=""
+        style="text-decoration: none"
+        >Terms and Conditions</a
+      >
+    </p>
 
-    <div class="bg-image">
-      <div class="form-conainer bg-white shadow p-3 mb-5 bg-body rounded" style="width: 25rem;">
-
-        <form action="" method="post">
-            <h3 class="d-flex justify-content-center mt-5 mb-5 fw-bolder">Login</h3>
-            <div class="mb-4">
-              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
-              
-            </div>
-            <div class="mb-2">
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required> 
-            </div>
-            <div class="mb-4 form-check">
-              <a href="resetPassword.html" class="d-flex justify-content-end" style="text-decoration: none; font-size: 14px;">Forgot password?</a>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">SIGN IN</button>
-            
-          </form>
-          <p class="text-center mt-3 text-secondary" style="font-size: 14px;">By continuing you agree to our <br><a href="" style="text-decoration: none;">Terms and Conditions</a></p>
-
-          <p class="mt-5" style="font-size: 14px;">New to Recycle? <a href="/register" style="text-decoration: none;" >SIGN UP</a> </p>
-
-      </div> 
-    </div>
+    <p class="mt-5" style="font-size: 14px">
+      New to Recycle?
+      <a href="/register" style="text-decoration: none">SIGN UP</a>
+    </p>
+  </div>
+</div>

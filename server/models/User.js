@@ -4,16 +4,13 @@ const userSchema = new mongoose.Schema({
     email:{
         type: String,
         required: true,
-        unique: true
+        // unique: true
     },
     password:{
         type: String,
         required: true
     },
-    emailToken:{
-        type: String,
-        required: true
-    },
+
     isVerified:{
         type: Boolean,
     },
@@ -21,6 +18,8 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     }
-})
+},  {
+    timestamps: true,
+  })
 
 module.exports = mongoose.model('User', userSchema);
