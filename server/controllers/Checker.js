@@ -11,7 +11,10 @@ const AuthCheck = (req,res,next) => {
 
     const decoded = jwt.verify(token,process.env.JWT_TOKEN);
 
+    // console.log(decoded);
+
     req.user = decoded;
+    req.user.userId
     res.locals.userInformation = decoded;
 
     next();

@@ -112,6 +112,7 @@ exports.profilePage = async(req, res) =>{
 //get // user ads page 
 exports.userAdsPage = async(req, res) =>{
 
+    console.log(req.user.userid);
     res.render('userAds', {title: 'Recycle | Your Ads'});
 }
 
@@ -423,11 +424,7 @@ const sendEmail = ({ _id, email}, res) => {
             .sendMail(mailOptions)
             .then(() => {
 
-                res.sendFile(
-                    path.join(
-                        __dirname + "./../../views/mailConfirmation"
-                    )
-                );
+                res.render("mailConfirmation");
                 console.log(`Email send to ${email}`);
             })
             .catch((error) => {

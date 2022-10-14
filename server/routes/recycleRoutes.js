@@ -11,8 +11,8 @@ routes.get('/product/:id', DecodeInformation, recycleController.productDetails);
 routes.get('/categories/:id', DecodeInformation, recycleController.categoryPageById);
 routes.post('/search', DecodeInformation, recycleController.searchProduct);
 
-routes.get('/userProfile', recycleController.profilePage);
-routes.get('/userAds', recycleController.userAdsPage);
+routes.get('/userProfile',AuthCheck, recycleController.profilePage);
+routes.get('/userAds', AuthCheck, recycleController.userAdsPage);
 routes.get('/mailConfirmation', recycleController.mailConfirmationStatusPage);
 
 

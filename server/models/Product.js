@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
+
+    ownerId: {
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
     name: {
         type: String,
         required: 'This fild is required.'
