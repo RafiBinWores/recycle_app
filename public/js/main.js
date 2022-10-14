@@ -1,4 +1,5 @@
 // user profile picture update button function start
+
 const defaultBtn = document.querySelector("#default-btn");
 const customBtn = document.querySelector("#custom-btn");
     function defaultBtnActive(){
@@ -6,3 +7,13 @@ const customBtn = document.querySelector("#custom-btn");
     }
 
 // user profile picture update button function end
+
+
+// product page image changing click function start
+
+function clickimg(smallImg) {
+    var fullImg = document.getElementById("coverImg");
+    fullImg.src = smallImg.src;
+}
+
+// product page image changing click function end

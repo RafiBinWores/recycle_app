@@ -11,6 +11,14 @@ body{
 a{
     text-decoration: none;
 }
+
+/* navbar */
+.nav-item{
+    margin-left: 10px;
+}
+
+
+
 /*-------------------------------
      Recommended Products
 ------------------------------ */
@@ -64,7 +72,9 @@ a{
     .flex-c {
         flex-direction: column;
     }
-
+    .nav-item{
+        margin: 0;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -74,7 +84,9 @@ a{
     .flex-c {
         flex-direction: column;
     }
-    
+    .nav-item{
+        margin: 0;
+    }
 
 }
 

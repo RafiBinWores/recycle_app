@@ -7,40 +7,48 @@ const productSchema = new mongoose.Schema({
     },
     price: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     image1: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     image2: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     image3: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     image4: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     brand: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     description: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     pNumber: {
         type: Array,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
     category: {
         type: String,
-        required: 'This flid is required.'
+        required: 'This field is required.'
     },
+    location: {
+        type: String,
+        required: 'This field is required.'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      }
     
 });
 

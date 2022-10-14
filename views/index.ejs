@@ -38,11 +38,11 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                   <a href="/product/<%= product._id %>" class="card border-primary h-80 rounded mx-auto d-block shadow p-3 mb-5 bg-body rounded" style="max-width: 15rem; max-height: 18rem;">
-                    <img src="/uploads/<%= product.image1 %>" class="card-img-top rounded img-size" alt="...">
+                    <img src="/uploads/<%= product.image1 %>" class="card-img-top rounded img-size" alt="<%= product.name %>">
                     <div class="card-body">
                       <h6 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><%= product.name %></h6>
                       <p class="text-primary">৳ <%= product.price %></p>
-                      <p class="d-flex justify-content-between text-secondary pt-2"><small >Dhaka</small> <small>1 hour</small></p>
+                      <p class="d-flex justify-content-between text-secondary pt-2"><small ><%= product.location %></small> <small>1 hour</small></p>
                     </div>
                   </a>
                 </div>
