@@ -97,9 +97,7 @@ exports.searchProduct = async(req, res) =>{
 
 }
 
-
-
-//get // userprofile page
+//get // userProfile page 
 exports.profilePage = async(req, res) =>{
 
     res.render('userProfile', {title: 'Recycle | Your Profile'});
@@ -112,6 +110,7 @@ exports.profilePage = async(req, res) =>{
 //get // user ads page 
 exports.userAdsPage = async(req, res) =>{
 
+    // console.log(req.user.userid);
     res.render('userAds', {title: 'Recycle | Your Ads'});
 }
 
@@ -157,8 +156,97 @@ exports.userResetPassword = async(req,res) => {
 // get // open the sell form 
 exports.openSellForm = async(req,res) => {
 
-    res.render('postAds', {title: 'Recycle | Post Your Ads'});
+    const infoErrorsObj = req.flash('infoErrors')
+    const infoSubmitObj = req.flash('infoSubmit')
+
+    res.render('postAds', {title: 'Recycle | Post Your Ads', infoErrorsObj, infoSubmitObj});
 }
+
+
+// post // post ad form
+exports.postAdsForm = async(req,res) => {
+
+    try {
+
+        let imageUploadFile1;
+        let uploadPath1;
+        let newImageName1;
+
+        let imageUploadFile2;
+        let uploadPath2;
+        let newImageName2;
+
+        let imageUploadFile3;
+        let uploadPath3;
+        let newImageName3;
+        
+        let imageUploadFile4;
+        let uploadPath4;
+        let newImageName4;
+
+        if(!req.files || Object.keys(req.files).length == 0){
+        console.log('No Files uploaded.');
+        } else {
+
+            imageUploadFile1 = req.files.image1;
+            imageUploadFile2 = req.files.image2;
+            imageUploadFile3 = req.files.image3;
+            imageUploadFile4 = req.files.image4;
+
+            newImageName1 = Date.now() + imageUploadFile1.name;
+            newImageName2 = Date.now() + imageUploadFile2.name;
+            newImageName3 = Date.now() + imageUploadFile3.name;
+            newImageName4 = Date.now() + imageUploadFile4.name;
+
+            uploadPath1 = require('path').resolve('./') + '/public/uploads/' + newImageName1;
+            uploadPath2 = require('path').resolve('./') + '/public/uploads/' + newImageName2;
+            uploadPath3 = require('path').resolve('./') + '/public/uploads/' + newImageName3;
+            uploadPath4 = require('path').resolve('./') + '/public/uploads/' + newImageName4;
+
+            imageUploadFile1.mv(uploadPath1, function(err){
+                if(err) return res.satus(500).send(err);
+            })
+            imageUploadFile2.mv(uploadPath2, function(err){
+                if(err) return res.satus(500).send(err);
+            })
+            imageUploadFile3.mv(uploadPath3, function(err){
+                if(err) return res.satus(500).send(err);
+            })
+            imageUploadFile4.mv(uploadPath4, function(err){
+                if(err) return res.satus(500).send(err);
+            })
+        }
+        
+        const newProduct = new Product({
+
+            ownerId: req.params._id,
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category,
+            location: req.body.location,
+            image1: newImageName1,
+            image2: newImageName2,
+            image3: newImageName3,
+            image4: newImageName4,
+            brand: req.body.brand,
+            description: req.body.description,
+            pNumber: req.body.pNumber,
+               
+        });
+
+        await newProduct.save();
+      
+        req.flash('infoSubmit', 'Product has been added.');
+        res.redirect('postAds');
+    } catch (error) {
+
+        req.flash('infoErrors', error);
+        res.redirect('postAds');
+    }
+}
+
+
+
 // post // user registration
 exports.userPostRegister = async(req,res) => {
    
@@ -423,11 +511,7 @@ const sendEmail = ({ _id, email}, res) => {
             .sendMail(mailOptions)
             .then(() => {
 
-                res.sendFile(
-                    path.join(
-                        __dirname + "./../../views/mailConfirmation"
-                    )
-                );
+                res.render("mailConfirmation");
                 console.log(`Email send to ${email}`);
             })
             .catch((error) => {
@@ -470,6 +554,11 @@ const sendEmail = ({ _id, email}, res) => {
       })
 
 }
+
+
+
+
+// moment 
 
 
 

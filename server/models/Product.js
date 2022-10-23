@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
+
+    ownerId: {
+        type: mongoose.Types.ObjectId
+    },
     name: {
         type: String,
-        required: 'This fild is required.'
+        required: 'This field is required.'
     },
     price: {
         type: String,
@@ -27,7 +31,6 @@ const productSchema = new mongoose.Schema({
     },
     brand: {
         type: String,
-        required: 'This field is required.'
     },
     description: {
         type: String,
@@ -39,10 +42,12 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
+        enum: ['Mobiles', 'Electronics', 'Home & Living', 'Fashion & Beauty', 'Sports', 'Toys', 'Bikes', 'Books'],
         required: 'This field is required.'
     },
     location: {
         type: String,
+        enum:['Dhaka', 'Chattogram', 'Khulna', 'Rajshahi', 'Barishal', 'Rangpur', 'Mymensingh', 'Sylhet'],
         required: 'This field is required.'
     },
     createdAt: {
