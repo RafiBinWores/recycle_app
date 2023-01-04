@@ -1,0 +1,117 @@
+<!--------------------------
+       navbar start  
+--------------------------->
+
+<%- include('navbar'); -%>
+
+<!-------------------------
+       navbar end 
+--------------------------->
+
+<!----------------------------------------------
+     mobile and tab product filter bar  
+------------------------------------------------->
+
+<div class="container d-flex justify-content-between flex-row mb-3 mt-5 pt-3 d-lg-none">
+
+  <div class="p-2 dropdown">
+    <a class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="uil uil-map-marker"></i> Category
+    </a>
+    <ul class="dropdown-menu">
+      
+      <% if(typeof categories !== 'undefined' && categories.length >0 ) {%>
+        <% categories.forEach(function(category, index) { %>
+          <li><a class="dropdown-item" style="font-size: 15px;" href="/categories/<%= category.name %>"><%- category.name %></li>
+        <% }) %>
+      <% } %>
+
+    </ul>
+  </div>
+
+  <div class="p-2 dropdown">
+    <a class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="uil uil-map-marker"></i> Location
+    </a>
+      <ul class="dropdown-menu">
+
+        <% if(typeof locations !=='undefined' && locations.length >0) {%> 
+          <% locations.forEach(function(location, index) {%> 
+          <li><a class="d-flex ms-2 pb-1" style="font-size: 15px;" href="/locations/<%= location.name %>"><%- location.name %></a></li>
+          <% }) %>
+        <% } %>
+        
+      </ul>
+  </div>
+</div>
+
+<!-----------------------------
+         desktop view 
+---------------------------- -->
+
+<div class="category-container">
+  <div class="container mt-5 pt-5">
+
+      <h3 class="category-title">Used product in <%= locationId %></h3>
+      
+  </div>
+    
+      <div class="container d-flex gap-3 pt-3">
+          <div class=" d-none d-lg-block" style="width: 20%;">
+          
+              
+          <div class="sidebar-category-menu border-bottom border-secondary" style="width: 90%;">
+              <h6 class="mb-3">Category</h6>
+              
+              <div class="sidebar-category-link">
+
+                <% if(typeof categories !== 'undefined' && categories.length >0 ) {%>
+                  <% categories.forEach(function(category, index) { %>
+                    <a class="d-flex ms-2 pb-1" style="font-size: 15px;" href="/categories/<%= category.name %>"><%- category.name %></a>
+                  <% }) %>
+                <% } %>
+            
+              </div>
+          </div>
+          <div class="sidebar-location-menu">
+              <h6 class="mb-3 mt-3">Location</h6>
+              <div class="sidebar-category-link">
+                <% if(typeof locations !== 'undefined' && locations.length >0 ) {%>
+                  <% locations.forEach(function(location, index) { %>
+                    <a class="d-flex ms-2 pb-1" style="font-size: 15px;" href="/locations/<%= location.name %>"><%- location.name %></a>
+                  <% }) %>
+                <% } %>
+              </div>
+          </div>
+      </div>
+      
+          <div class="container">
+            <div class="row">
+              <% if(typeof locationById !== 'undefined' && locationById.length > 0) {%> 
+                <% locationById.forEach(function(product, index) {%> 
+  
+                <a href="/product/<%= product._id %>" class="col-6 col-md-4 col-lg-4 mx-auto">
+                  <div class="card border-primary rounded d-block shadow p-3 mb-5 bg-body rounded" style="max-width: 15rem;">
+                    <img src="/uploads/<%- product.image1 %>" class="card-img-top rounded img-size" alt="...">
+                    <div class="card-body">
+                      <h6 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><%= product.name %></h6>
+                      <p class="text-primary">৳ <%= product.price %></p>
+                      <p class="d-flex justify-content-between text-secondary pt-1 location-name"><small ><%= product.location %></small> <small>1 hour</small></p>
+                    </div>
+                  </div>
+                </a>
+                <% }) %> 
+                <%} else {%>
+                <h5 class="text-danger text-center">No item found</h5> 
+                <% } %>
+            </div>
+        </div>
+      </div>
+          </div>
+  
+</div>
+
+<!-------------------------------
+        footer secton 
+ -------------------------------->
+  <%- include('footer'); -%>

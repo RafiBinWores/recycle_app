@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     username:{
-        type: String
+        type: String,
+        required: true
     },
     userImage:{
         type: String
@@ -19,11 +20,8 @@ const userSchema = new mongoose.Schema({
 
     isVerified:{
         type: Boolean,
-    },
-    date:{
-        type: Date,
-        default: Date.now()
     }
+
 },  {
     timestamps: true,
   })

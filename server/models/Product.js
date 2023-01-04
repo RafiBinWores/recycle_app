@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
 
     ownerId: {
-        type: mongoose.Types.ObjectId
+        type: String
+        // mongoose.Types.ObjectId
     },
     name: {
         type: String,
@@ -50,11 +51,8 @@ const productSchema = new mongoose.Schema({
         enum:['Dhaka', 'Chattogram', 'Khulna', 'Rajshahi', 'Barishal', 'Rangpur', 'Mymensingh', 'Sylhet'],
         required: 'This field is required.'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-      }
-    
+}, {
+    timestamps: true,
 });
 
 

@@ -10,9 +10,14 @@ routes.get('/', DecodeInformation, recycleController.homepage);
 routes.get('/product/:id', DecodeInformation, recycleController.productDetails);
 routes.get('/categories/:id', DecodeInformation, recycleController.categoryPageById);
 routes.post('/search', DecodeInformation, recycleController.searchProduct);
+routes.get('/locations', DecodeInformation, recycleController.locationPage);
+routes.get('/locations/:id', DecodeInformation, recycleController.locationPageById);
 
-routes.get('/userProfile',AuthCheck, recycleController.profilePage);
-routes.get('/userAds', AuthCheck, recycleController.userAdsPage);
+routes.get('/userProfile/:id',AuthCheck, recycleController.profilePage);
+routes.post('/userProfile/:id',AuthCheck, recycleController.updateProfileById);
+
+routes.get('/userAds/:id', AuthCheck, recycleController.userAdsPage);
+
 routes.get('/mailConfirmation', recycleController.mailConfirmationStatusPage);
 
 routes.get("/postAds",AuthCheck,recycleController.openSellForm);

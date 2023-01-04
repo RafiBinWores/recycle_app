@@ -10,3 +10,4 @@ db.once('open', function(){
 //models
 require('./Category');
 require('./Product');
+require('./Location');

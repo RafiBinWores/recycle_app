@@ -26,10 +26,12 @@
         <div class="col-md-3 col-lg-2 mx-auto mt-3">
           <h5 class="text-upercase md-4 font-weight-bold text-white pb-2 mb-3 text-danger border-bottom border-white border-3">Usefull links</h5>
           <p>
-            <a href="/userProfile" class="text-white" style="text-decoration: none">Your Account</a>
+            <% if(userInformation.useremail) { %>
+              <a href="/userProfile/<%= userInformation.userid %>" class="text-white" style="text-decoration: none">Your Account</a>
+              <% } %> 
           </p>
           <p>
-            <a href="" class="text-white" style="text-decoration: none">Became a seller</a>
+            <a href="/postAds" class="text-white" style="text-decoration: none">Became a seller</a>
           </p>
           <p>
             <a href="" class="text-white" style="text-decoration: none">Contact us</a>

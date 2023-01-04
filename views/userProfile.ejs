@@ -6,7 +6,7 @@
 
 <div class="category-container">
   <div class="container mt-5 pt-5">
-    <h3 class="category-title">Rafi Bin Wores</h3>
+    <h3 class="category-title"><%= user.username %></h3>
   </div>
 
   <div class="container d-flex gap-5 pt-3 flex-c">
@@ -14,10 +14,15 @@
       <div class="sidebar-profile-menu">
         <h6 class="mb-3 border-bottom border-dark">Account</h6>
         <div class="sidebar-category-link">
-          <a
-            class="d-flex ms-2 mb-3"
-            style="font-size: 15px">Profile</a>
-          <a class="d-flex ms-2 mb-3" style="font-size: 15px" href="/userAds">My Ads</a>
+
+          <% if(userInformation.useremail) { %>
+            
+          <a href="/userProfile/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">Profile</a>
+
+          <a href="/userAds/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">My Ads</a>
+
+          <% } %> 
+
           <a
             class="d-flex ms-2"
             style="font-size: 15px"
@@ -32,7 +37,7 @@
         <div class="col-12 mb-4">
           <h5>Settings</h5>
         </div>
-
+  
         <div class="col-12">
           <div class="img-wrapper rounded mx-auto">
             
@@ -41,26 +46,32 @@
             <h6 class="text-info">No file chosen, yet!</h6>
 
           </div>
+    
+      
           <form action="" method="post" enctype="multipart/form-data">
             <div class="profile-img-input">
-              <input id="default-btn" type="file" name="userImage" hidden />
-              <button
+              <input id="default-btn" type="file" name="ownerImage" hidden/>
+              <label
                 onclick="defaultBtnActive()"
                 id="custom-btn"
                 class="btn btn-info mt-3"
                 style="width: 12rem">
                 Choose a file
-              </button>
+              </label>
             </div>
             <div class="mt-4">
               <h6>Username</h6>
-              <input type="text" name="username" class="form-control mx-auto border-primary mt-3" id="" placeholder="Your Name" style="width: 20rem" />
+              <input type="text" name="username" value="<%= user.username %>" class="form-control mx-auto border-primary mt-3" id="" placeholder="Your Name" style="width: 20rem" />
+            </div>
+            <div class="mt-4">
+              <input type="hidden" name="user_id" id="" value="<%= user._id %>">
             </div>
             <button type="submit" class="btn btn-info mt-4" style="width: 20rem">
               Update details
             </button>
           </form>
         </div>
+
 
         <div class="col-12 mt-5">
           <h6>Change Password</h6>
@@ -73,6 +84,7 @@
             <div class="mb-4">
               <input
                 type="password"
+                name="password"
                 class="form-control border-primary"
                 id="exampleInputPassword1"
                 placeholder="New Password"
@@ -81,6 +93,7 @@
             <div class="mb-4">
               <input
                 type="password"
+                name="cPassword"
                 class="form-control border-primary"
                 id="exampleInputPassword1"
                 placeholder="Confirm Password"

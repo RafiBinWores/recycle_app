@@ -7,11 +7,13 @@ const url = require("url");
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
+const multer  = require("multer");
 /* models */
 const User = require('../models/User');
 const UserVerification = require('../models/UserVerification');
 
 const Category = require('../models/Category');
+const Location = require('../models/Location');
 const Product = require('../models/Product');
 const { search } = require('../routes/recycleRoutes');
 
@@ -37,9 +39,7 @@ exports.homepage = async(req, res) => {
         const categories = await Category.find({}).limit(limitNumber);
 
         const latest = await Product.find({}).sort({_id: -1});
-
         const usedProduct = { latest };
-
 
         res.render('index', { title: 'Recycle | Home Page', categories, usedProduct});
     } catch (error) {
@@ -67,29 +67,58 @@ exports.categoryPageById = async(req, res) => {
 
     try {
         let categoryId = req.params.id;
-        const limitNumber = 8;
-        const categories = await Category.find({}).limit(limitNumber).sort({name: 1});
 
         const categoryById = await Product.find({'category': categoryId}).sort({_id: -1});
+        const locations = await Location.find({});
+        const categories = await Category.find({});
 
-        res.render('categories', { title: 'Recycle | Explore Categories', categoryById, categories, categoryId});
+        res.render('categories', { title: 'Recycle | Explore Categories', categoryById, categoryId, locations, categories});
     } catch (error) {
         res.status(500).send({message: error.message || "Error Occured"});
     }
 }
 
-// post / search
 
+exports.locationPage = async(req, res) => {
+
+        res.render('locations', { title: 'Recycle | Explore location'});
+
+}
+
+
+//get //locationPageById
+exports.locationPageById = async(req, res) => {
+
+    try {
+        let locationId = req.params.id;
+        let categoryId = req.params.id;
+
+        const locations = await Location.find({});
+        const categories = await Category.find({});
+
+        const locationById = await Product.find({'location': locationId}).sort({_id: -1});
+        const categoryById = await Product.find({'category': categoryId}).sort({_id: -1});
+
+        res.render('locations', { title: 'Recycle | Explore location', locationById, locationId, locations, categories, categoryById});
+    } catch (error) {
+        
+    }
+}
+
+
+
+// post / search
 exports.searchProduct = async(req, res) =>{
 
     //Search
     try {
         let searchItem = req.body.searchItem;
         const categories = await Category.find({}).sort({name: 1});
+        const locations = await Location.find({});
 
         let product = await Product.find({ $text: { $search: searchItem, $diacriticSensitive: true }});
 
-        res.render('search', {title: 'Recycle | Search', product, categories});
+        res.render('search', {title: 'Recycle | Search', product, categories, locations, searchItem});
     } catch (error) {
 
         res.status(500).send({message: error.message || "Error Occured"});
@@ -97,61 +126,7 @@ exports.searchProduct = async(req, res) =>{
 
 }
 
-//get // userProfile page 
-exports.profilePage = async(req, res) =>{
 
-    res.render('userProfile', {title: 'Recycle | Your Profile'});
-}
-
-
-
-
-
-//get // user ads page 
-exports.userAdsPage = async(req, res) =>{
-
-    // console.log(req.user.userid);
-    res.render('userAds', {title: 'Recycle | Your Ads'});
-}
-
-//get // mail confirmation page
-exports.mailConfirmationStatusPage = async(req, res) =>{
-
-    res.render('mailConfirmation', {title: 'Recycle | Verify your email addess'});
-}
-
-
-//get // userlogin
-exports.userLogin = async(req, res) =>{
-
-    // check user is already logged in or not 
-    const cookies = Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
-
-    if(cookies){
-        let token = cookies[process.env.COOKIE_NAME];
-
-        if(token){
-            res.redirect("/");
-        }else{
-            res.render('login', {title: 'Recycle | Login'});
-        }
-
-    }else{
-    res.render('login', {title: 'Recycle | Login'});
-    }
-}
-
-//get // user register
-exports.userRegister = async(req, res) =>{
-
-    res.render('register', {title: 'Recycle | Sign Up'});
-}
-
-// get // reset password
-exports.userResetPassword = async(req,res) => {
-    
-    res.render('resetPassword', {title: 'Recycle | Reset Password' });
-}
 
 // get // open the sell form 
 exports.openSellForm = async(req,res) => {
@@ -219,7 +194,9 @@ exports.postAdsForm = async(req,res) => {
         
         const newProduct = new Product({
 
-            ownerId: req.params._id,
+            ownerId: req.user.userid,
+            ownerName: req.user.username,
+            ownerEmail: req.user.email,
             name: req.body.name,
             price: req.body.price,
             category: req.body.category,
@@ -245,13 +222,106 @@ exports.postAdsForm = async(req,res) => {
     }
 }
 
+//get //profilePage
+exports.profilePage = async(req, res) =>{
+    res.render('userProfile', {title: 'Recycle | Profile page'});
+}
+
+//put // userProfile page // update
+exports.updateProfileById = async(req, res) =>{
+
+    try {
+        
+            const userUpdate = await User.findByIdAndUpdate({_id: req.body.user_id},{$set: {username:req.body.username} });
+
+        res.redirect('userProfile');
+
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occured"});
+        res.redirect('userProfile')
+    }
+
+}
+
+//get // userProfile page 
+exports.profilePage = async(req, res) =>{
+
+    try {
+        const user = await User.findById(req.params.id);
+
+        res.render('userProfile', {title: 'Recycle | Profile page', user});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occured"});
+    }
+
+}
+
+
+
+//get // user ads page //by id
+exports.userAdsPage = async(req, res) =>{
+
+    try {
+        let productId = req.params.id;
+
+        const userProduct = await Product.find({'product': productId}).sort({_id: -1});
+
+        res.render('userAds', {title: 'Recycle | Your Ads', userProduct});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occured"});
+    }
+  
+}
+
+
+
+
+//get // mail confirmation page
+exports.mailConfirmationStatusPage = async(req, res) =>{
+
+    res.render('mailConfirmation', {title: 'Recycle | Verify your email addess'});
+}
+
+
+//get // userlogin
+exports.userLogin = async(req, res) =>{
+
+    // check user is already logged in or not 
+    const cookies = Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
+
+    if(cookies){
+        let token = cookies[process.env.COOKIE_NAME];
+
+        if(token){
+            res.redirect("/");
+        }else{
+            res.render('login', {title: 'Recycle | Login'});
+        }
+
+    }else{
+    res.render('login', {title: 'Recycle | Login'});
+    }
+}
+
+//get // user register
+exports.userRegister = async(req, res) =>{
+
+    res.render('register', {title: 'Recycle | Sign Up'});
+}
+
+// get // reset password
+exports.userResetPassword = async(req,res) => {
+    
+    res.render('resetPassword', {title: 'Recycle | Reset Password' });
+}
+
 
 
 // post // user registration
 exports.userPostRegister = async(req,res) => {
    
 
-    const {email,password,confirmpassword} = req.body;
+    const {username, email, password, confirmpassword} = req.body;
 
     if(password.length < 8){
         res.render("register",{
@@ -281,6 +351,7 @@ exports.userPostRegister = async(req,res) => {
             }else{
 
                 const newUser = new User({
+                    username: username,
                     email: email,
                     password: hashedPassword,
                     isVerified: false,
@@ -472,8 +543,6 @@ exports.LogoutUser = async (req,res) =>{
 
 
 
-
-
 const sendEmail = ({ _id, email}, res) => {
 
     const currentUrl = `${process.env.APP_URL}`;
@@ -561,9 +630,6 @@ const sendEmail = ({ _id, email}, res) => {
 // moment 
 
 
-
-
-
 // async function insertDammyCategoryData(){
 //     try {
 //         await Category.insertMany([
@@ -633,119 +699,119 @@ const sendEmail = ({ _id, email}, res) => {
 //                     "01706602203",
 //                 ],
 //             },
-// //             {
-// //                 "name": "Legos test",
-// //                 "price": "1000",
-// //                 "category": "Toys",
-// //                 "image1": "lego-1.jpg",
-// //                 "image2": "lego-2.jpg",
-// //                 "image3": "lego-3.jpg",
-// //                 "image4": "lego-4.jpg",
-// //                 "brand": "lego",
-// //                 "description": "star wars edition lego set ",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "Mix toys combo test",
-// //                 "price": "2000",
-// //                 "category": "Toys",
-// //                 "image1": "toys-1.jpg",
-// //                 "image2": "toys-2.jpg",
-// //                 "image3": "toys-3.jpg",
-// //                 "image4": "toys-4.jpg",
-// //                 "brand": "Unknown",
-// //                 "description": "mix toys set.",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "Washing Machine test",
-// //                 "price": "10,000",
-// //                 "category": "Electronics",
-// //                 "image1": "washing-1.jpg",
-// //                 "image2": "washing-2.jpg",
-// //                 "image3": "washing-3.jpg",
-// //                 "image4": "washing-4.jpg",
-// //                 "brand": "Lg",
-// //                 "description": "Almost  new just 4 month used.",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "Lg ultrawide tv test",
-// //                 "price": "15,000",
-// //                 "category": "Electronics",
-// //                 "image1": "tv-1.jpg",
-// //                 "image2": "tv-2.jpg",
-// //                 "image3": "tv-3.jpg",
-// //                 "image4": "tv-4.jpg",
-// //                 "brand": "Lg",
-// //                 "description": "Almost  new just 1 month used. warranty available",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "Badminton rackets test",
-// //                 "price": "800",
-// //                 "category": "Sports",
-// //                 "image1": "racket-1.jpg",
-// //                 "image2": "racket-2.jpg",
-// //                 "image3": "racket-3.jpg",
-// //                 "image4": "racket-4.jpg",
-// //                 "brand": "adidas",
-// //                 "description": "Almost  new. just 3 month used. ",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "Football test",
-// //                 "price": "1,800",
-// //                 "category": "Sports",
-// //                 "image1": "football-1.jpg",
-// //                 "image2": "football-2.jpg",
-// //                 "image3": "football-3.jpg",
-// //                 "image4": "football-4.jpg",
-// //                 "brand": "adidas",
-// //                 "description": "Almost  new. just played few match.",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "leather sofa",
-// //                 "price": "100,000",
-// //                 "category": "Home & Living",
-// //                 "image1": "sofa-1.jpg",
-// //                 "image2": "sofa-2.jpg",
-// //                 "image3": "sofa-3.jpg",
-// //                 "image4": "sofa-4.jpg",
-// //                 "brand": "apple",
-// //                 "description": "awidh awd89 a9a dnha9 daih d9awdc9aw9d hauc8awhdwd  awdgawd ",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                     "01626980009"
-// //                 ],
-// //             },
-// //             {
-// //                 "name": "chair test",
-// //                 "price": "8,000",
-// //                 "category": "Home & Living",
-// //                 "image1": "chair-1.jpg",
-// //                 "image2": "chair-2.jpg",
-// //                 "image3": "chair-3.jpg",
-// //                 "image4": "chair-4.jpg",
-// //                 "brand": "unknown",
-// //                 "description": "Almost  new. just 3 month used. ",
-// //                 "pNumber": [
-// //                     "01706602203",
-// //                 ],
-// //             },
+//             {
+//                 "name": "Legos test",
+//                 "price": "1000",
+//                 "category": "Toys",
+//                 "image1": "lego-1.jpg",
+//                 "image2": "lego-2.jpg",
+//                 "image3": "lego-3.jpg",
+//                 "image4": "lego-4.jpg",
+//                 "brand": "lego",
+//                 "description": "star wars edition lego set ",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
+//             {
+//                 "name": "Mix toys combo test",
+//                 "price": "2000",
+//                 "category": "Toys",
+//                 "image1": "toys-1.jpg",
+//                 "image2": "toys-2.jpg",
+//                 "image3": "toys-3.jpg",
+//                 "image4": "toys-4.jpg",
+//                 "brand": "Unknown",
+//                 "description": "mix toys set.",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
+//             {
+//                 "name": "Washing Machine test",
+//                 "price": "10,000",
+//                 "category": "Electronics",
+//                 "image1": "washing-1.jpg",
+//                 "image2": "washing-2.jpg",
+//                 "image3": "washing-3.jpg",
+//                 "image4": "washing-4.jpg",
+//                 "brand": "Lg",
+//                 "description": "Almost  new just 4 month used.",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
+//             {
+//                 "name": "Lg ultrawide tv test",
+//                 "price": "15,000",
+//                 "category": "Electronics",
+//                 "image1": "tv-1.jpg",
+//                 "image2": "tv-2.jpg",
+//                 "image3": "tv-3.jpg",
+//                 "image4": "tv-4.jpg",
+//                 "brand": "Lg",
+//                 "description": "Almost  new just 1 month used. warranty available",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
+//             {
+//                 "name": "Badminton rackets test",
+//                 "price": "800",
+//                 "category": "Sports",
+//                 "image1": "racket-1.jpg",
+//                 "image2": "racket-2.jpg",
+//                 "image3": "racket-3.jpg",
+//                 "image4": "racket-4.jpg",
+//                 "brand": "adidas",
+//                 "description": "Almost  new. just 3 month used. ",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
+//             {
+//                 "name": "Football test",
+//                 "price": "1,800",
+//                 "category": "Sports",
+//                 "image1": "football-1.jpg",
+//                 "image2": "football-2.jpg",
+//                 "image3": "football-3.jpg",
+//                 "image4": "football-4.jpg",
+//                 "brand": "adidas",
+//                 "description": "Almost  new. just played few match.",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
+//             {
+//                 "name": "leather sofa",
+//                 "price": "100,000",
+//                 "category": "Home & Living",
+//                 "image1": "sofa-1.jpg",
+//                 "image2": "sofa-2.jpg",
+//                 "image3": "sofa-3.jpg",
+//                 "image4": "sofa-4.jpg",
+//                 "brand": "apple",
+//                 "description": "awidh awd89 a9a dnha9 daih d9awdc9aw9d hauc8awhdwd  awdgawd ",
+//                 "pNumber": [
+//                     "01706602203",
+//                     "01626980009"
+//                 ],
+//             },
+//             {
+//                 "name": "chair test",
+//                 "price": "8,000",
+//                 "category": "Home & Living",
+//                 "image1": "chair-1.jpg",
+//                 "image2": "chair-2.jpg",
+//                 "image3": "chair-3.jpg",
+//                 "image4": "chair-4.jpg",
+//                 "brand": "unknown",
+//                 "description": "Almost  new. just 3 month used. ",
+//                 "pNumber": [
+//                     "01706602203",
+//                 ],
+//             },
             
 //         ]);
 //     } catch (error) {
@@ -754,3 +820,43 @@ const sendEmail = ({ _id, email}, res) => {
 // }
 
 // insertDammyProductData();
+
+
+
+
+
+// async function insertDammyLocationData(){
+//         try {
+//             await Location.insertMany([
+//                 {
+//                     "name": "Dhaka"
+//                 },
+//                 {
+//                     "name": "Chattogram"
+//                 },
+//                 {
+//                     "name": "Khulna"
+//                 },
+//                 {
+//                     "name": "Rajshahi"
+//                 },
+//                 {
+//                     "name": "Barishal"
+//                 },
+//                 {
+//                     "name": "Rangpur"
+//                 },
+//                 {
+//                     "name": "Mymensingh"
+//                 },
+//                 {
+//                     "name": "Sylhet"
+//                 }
+            
+//             ]);
+//         } catch (error) {
+//             console.log('err', + error)
+//         }
+//     }
+    
+//     insertDammyLocationData();

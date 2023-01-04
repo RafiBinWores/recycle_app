@@ -1,11 +1,11 @@
 <div class="bg-image">
   <div
-    class="form-conainer bg-white shadow p-3 mb-5 bg-body rounded"
+    class="form-conainer bg-white shadow p-3 bg-body rounded"
     style="width: 25rem"
   >
     <form action="" method="post">
       
-      <h3 class="d-flex justify-content-center mt-4 mb-5 fw-bolder">Sign Up</h3>
+      <h3 class="d-flex justify-content-center mt-3 mb-5 fw-bolder">Sign Up</h3>
 
       <% if(typeof message != 'undefined') { %>
         <div class="alert alert-danger" role="alert">
@@ -14,6 +14,18 @@
       
       <% } %>
       
+      <div class="mb-4">
+        <input
+          name="username"
+          type="text"
+          class="form-control"
+          id="exampleInputtext"
+          placeholder="Username"
+          aria-describedby="namehelp"
+          required
+        />
+      </div>
+
       <div class="mb-4">
         <input
           name="email"
@@ -37,7 +49,7 @@
         />
       </div>
 
-      <div class="mb-5">
+      <div class="mb-3">
         <input
           name="confirmpassword"
           type="password"

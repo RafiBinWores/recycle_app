@@ -29,9 +29,9 @@
         
           <form method="post" class="row ms-5 me-5" enctype="multipart/form-data">
             <div class="col-12">
-                <h6 class="mt-5">Categorys</h6>
+                <h6 class="mt-5">Categories</h6>
                 <select name="category" class="form-select border-dark border-1" aria-label="Default select example" required>
-                    <option selected>Choose Categorys</option>
+                    <option selected>Choose Categories</option>
                     <option value="Mobiles">Mobiles</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Home & Living">Home & Living</option>
@@ -83,16 +83,16 @@
                 <h3 class="ms-5 mb-4 me-5 ">Add up to 4 photos</h3>
             <div class="col-12 ">
                 <div class="mb-2">
-                    <input type="file" class="form-control border-bottom border-primary" name="image1">
+                    <input type="file" class="form-control border-bottom border-primary" name="image1" required>
                 </div>
                 <div class="mb-2">
-                    <input type="file" class="form-control border-bottom border-primary" name="image2" >
+                    <input type="file" class="form-control border-bottom border-primary" name="image2" required>
                 </div>
                 <div class="mb-2">
-                    <input type="file" class="form-control border-bottom border-primary" name="image3" >
+                    <input type="file" class="form-control border-bottom border-primary" name="image3" required>
                 </div>
                 <div class="mb-2">
-                    <input type="file" class="form-control border-bottom border-primary" name="image4" >
+                    <input type="file" class="form-control border-bottom border-primary" name="image4" required>
               </div>
 
             </div>
@@ -127,7 +127,7 @@
                 </div>
               </div>
             
-              <button type="submit" class="btn mt-4 col-12  btn-primary" style="width: 10rem;">Post ad</button>
+              <button type="submit" class="btn mt-4 col-12 btn-primary" style="width: 10rem;">Post ad</button>
 
             </div>
           </form>
@@ -152,5 +152,19 @@
           input.value = '';
           numberList.appendChild(newNumber);
     });
+
+      let phone = document.getElementById('addNumber');
+
+      phone.addEventListener('input', function(){
+
+        if(phone.value.length<11 || phone.value.length>11 ){
+          
+          phone.style.color= "red";
+        }
+        else{
+          phone.style.color= "green";
+        }
+      })
+
     </script>
     
