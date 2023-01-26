@@ -1,0 +1,43 @@
+<!--------------------------
+       navbar start  
+--------------------------->
+
+<%- include('navbar'); -%>
+
+<!-------------------------
+       navbar end 
+--------------------------->
+
+
+    <div class="container">
+        <div class="option-area" style="margin-top: 120px;">
+            <div class="text-center" style="color: #3A3A3A;">
+                <h3 class=" fw-semibold">Welcome To Recycle! Let's Post an Ad.</h3>
+                <p class="fw-light">Choose an option</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center text-primary ads-field mb-5">
+      <div class="row gy-4 gx-3 mt-3">
+
+        <% if(userInformation.useremail) { %>
+        <div class="col-sm-12 col-lg-6">
+          <a href="/postAds/<%= userInformation.userid %>" class="btn btn-outline-primary px-4 py-2 border rounded shadow-sm">Post ads for sell <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        
+        
+        <div class="col-sm-12 col-lg-6">
+          <a href="/postRentAds/<%= userInformation.userid %>" class="btn btn-outline-primary px-4 py-2 border rounded shadow-sm">Post ads for rent <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <% } %>
+
+      </div>
+    </div>
+
+
+
+  <!-------------------------------
+        footer secton 
+ -------------------------------->
+ <%- include('footer'); -%>

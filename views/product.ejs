@@ -41,13 +41,13 @@
         <div class="col-12 col-lg-6">
             <div>
                 <h3><%- product.name %></h4>
-                <h5 class="mt-4 text-primary">TK <%- product.price %></h6>
-                <p class="mt-3 d-flex justify-content-between text-secondary"><small><%- product.location %></small> <small>1 hour</small></p>
+                <h5 class="mt-4 text-primary">TK: <%- product.price %></h6>
+                <p class="mt-3 d-flex justify-content-between text-secondary"><small><%= product.location %></small> <small><%= new Date(product.createdAt).toLocaleDateString(); %></small></p>
             </div>
             <div class="h4 pb-2 mb-4 border-bottom border-dark mt-2">
             </div>
             <div>
-                <p class="text-body">Seller: <%= product.ownerId %></p>
+                <p class="text-body fw-semibold">Seller: <%= user.username %></p>
                 <p>Number: <%- product.pNumber %></p>
                 <button type="button" class="btn btn-primary" style="width: 100%;">Chat with seller</button>
             </div>

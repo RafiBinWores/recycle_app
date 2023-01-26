@@ -11,7 +11,7 @@
 
       <!-------------------- form  --------------------->
     <div class="mt-5 pt-5">
-      <div class="container mt-5 pb-5 mb-5 border border-dark rounded form-container" style="max-width: 80%;">
+      <div class="container mt-5 pb-5 mb-5 border border-dark rounded form-container" >
         <h3 class="border-bottom border-dark border-1 mt-4 ms-4 me-4 pb-3">Fill The Form</h3>
 
         <!-- alarts -->
@@ -42,6 +42,8 @@
                     <option value="Books">Books</option>
                   </select>
             </div>
+
+            <input type="hidden" name="user_id" id="" value="<%= user._id %>">
 
             <div class="col-12">
               <h6 class="mt-4">Locations</h6>
@@ -74,8 +76,8 @@
             </div>
             
             <div class="col-12 ">
-                <label for="Textarea1" class="form-label mt-3">Description </label>
-                <textarea name="description" class="form-control border-dark border-1" id="Textarea1" rows="6" placeholder="Include condition, features and reason for selling" required></textarea>
+                <label for="a" class="form-label mt-3">Description </label>
+                <textarea name="description" class="form-control border-dark border-1" id="a" rows="6" placeholder="Include condition, features and reason for selling" required></textarea>
             </div>
 
                 <div class="h4 pb-2 mb-4 border-bottom border-dark mt-5">
@@ -104,11 +106,11 @@
                 <h3>Contact Details</h3>
                 <div class="px-0">
                     <p class="text-secondary">Name</p>
-                    <h6>Rafi Bin Wores</h6>
+                    <h6><%= user.username %> </h6>
                 </div>
                 <div>
                     <p class="text-secondary">Email</p>
-                    <h6>rafibinwores2203@gmail.com</h6>
+                    <h6><%= user.email %></h6>
                 </div>
                 <label for="addNumber" class="form-label mt-3"></i>Add phone Number</label>
                 <div class="numberList">
@@ -117,7 +119,7 @@
                     </div>
                 </div>
                 <div>
-                  <button type="button" class="mt-4 mb-3 col-12 btn btn-outline-primary" id="addPhoneNumberBtn" style="width: 10rem;">+ Add</button>
+                  <button type="button" class="mt-4 mb-3 col-12 btn btn-outline-primary" id="addPhoneNumberBtn" style="width: 10rem;">Add +</button>
                 </div>
                 <div class="form-check mt-2">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" required>
@@ -134,37 +136,48 @@
     </div>
     </div>
 
+
+    <!-- script for add multuple number  -->
+    <script>
+      let addPhoneNumberBtn = document.getElementById('addPhoneNumberBtn');
+      let numberList = document.querySelector('.numberList');
+      let numberDiv = document.querySelectorAll('.numberDiv')[0];
+
+      addPhoneNumberBtn.addEventListener('click', function(){
+
+        let newNumber = numberDiv.cloneNode(true);
+        let input = newNumber.getElementsByTagName('input')[0];
+        input.value = '';
+        numberList.appendChild(newNumber);
+  });
+
+    let phone = document.getElementById('addNumber');
+
+    phone.addEventListener('input', function(){
+
+      if(phone.value.length<11 || phone.value.length>11 ){
+        
+        phone.style.color= "red";
+      }
+      else{
+        phone.style.color= "green";
+      }
+    })
+
+  </script>
+
+<script type="text/javascript">
+  function divide() {
+      var txt;
+      txt = document.getElementById('a').value;
+      var text = txt.split(".");
+      var str = text.join('.</br>');
+      document.write(str);
+  }
+</script>
+  
     
 <!-- footer start  -->
     <%- include('footer'); -%> 
 <!-- footer end  -->
   
-<!-- script for add multuple number  -->
-    <script>
-        let addPhoneNumberBtn = document.getElementById('addPhoneNumberBtn');
-        let numberList = document.querySelector('.numberList');
-        let numberDiv = document.querySelectorAll('.numberDiv')[0];
-
-        addPhoneNumberBtn.addEventListener('click', function(){
-
-          let newNumber = numberDiv.cloneNode(true);
-          let input = newNumber.getElementsByTagName('input')[0];
-          input.value = '';
-          numberList.appendChild(newNumber);
-    });
-
-      let phone = document.getElementById('addNumber');
-
-      phone.addEventListener('input', function(){
-
-        if(phone.value.length<11 || phone.value.length>11 ){
-          
-          phone.style.color= "red";
-        }
-        else{
-          phone.style.color= "green";
-        }
-      })
-
-    </script>
-    

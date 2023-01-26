@@ -1,0 +1,183 @@
+
+    <!--------------- navbar  --------------->
+    <nav class="navbar fixed-top bg-light">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/img/navlogo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+            <span class="h3  text-primary">Recycle</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-------------------- form  --------------------->
+    <div class="mt-5 pt-5">
+      <div class="container mt-5 pb-5 mb-5 border border-dark rounded form-container" >
+        <h3 class="border-bottom border-dark border-1 mt-4 ms-4 me-4 pb-3">Fill The Form</h3>
+
+        <!-- alarts -->
+          <% if(infoSubmitObj !='') { %> 
+          <div class="ms-5 me-5 alert alert-success" role="alert">
+            <%= infoSubmitObj %> 
+          </div>
+          <% } %> 
+          
+          <% if(infoErrorsObj !='') { %> 
+          <div class="ms-5 me-5 alert alert-danger" role="alert">
+            <%= infoErrorsObj[0].message %> 
+          </div>
+          <% } %> 
+        
+          <form method="post" class="row ms-5 me-5" enctype="multipart/form-data">
+            <div class="col-12">
+                <h6 class="mt-5">Categories</h6>
+                <select name="category" class="form-select border-dark border-1" aria-label="Default select example" required>
+                    <option selected>Choose Categories</option>
+                    <option value="Mobiles">Mobiles</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Home & Living">Home & Living</option>
+                    <option value="Fashion & Beauty">Fashion & Beauty</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Toys">Toys</option>
+                    <option value="Bikes">Bikes</option>
+                    <option value="Books">Books</option>
+                  </select>
+            </div>
+
+            <input type="hidden" name="user_id" id="" value="<%= user._id %>">
+
+            <div class="col-12">
+              <h6 class="mt-4">Locations</h6>
+              <select name="location" class="form-select border-dark border-1" aria-label="Default select example" required>
+                  <option selected>Choose Locations</option>
+                  <option value="Dhaka">Dhaka</option>
+                  <option value="Chattogram">Chattogram</option>
+                  <option value="Khulna">Khulna</option>
+                  <option value="Rajshahi">Rajshahi</option>
+                  <option value="Barishal">Barishal</option>
+                  <option value="Rangpur">Rangpur</option>
+                  <option value="Mymensingh">Mymensingh</option>
+                  <option value="Sylhet">Sylhet</option>
+                </select>
+          </div>
+
+            <div class="col-12">
+                <label for="InputText1" class="form-label mt-3">Ad Title</label>
+                <input type="text" name="title" class="form-control border-dark border-1" id="InputText1" aria-describedby="textHelp" required>
+            </div>
+
+            <div class="col-12">
+                <label for="InputText2" class="form-label mt-3">Brand</label>
+                <input type="text" name="brand" class="form-control border-dark border-1" id="InputText2" aria-describedby="textHelp" >
+            </div>
+
+            <div class="col-12">
+                <label for="InputNumber1" class="form-label mt-3">Price/day <span>(&#2547;)</span></label>
+                <input type="number" name="price" class="form-control border-dark border-1" id="InputNumber1" aria-describedby="numberHelp" required>
+            </div>
+            
+            <div class="col-12 ">
+                <label for="a" class="form-label mt-3">Description </label>
+                <textarea name="description" class="form-control border-dark border-1" id="a" rows="6" placeholder="Include condition, features and reason for selling" required></textarea>
+            </div>
+
+                <div class="h4 pb-2 mb-4 border-bottom border-dark mt-5">
+                </div>
+                <h3 class="ms-5 mb-4 me-5 ">Add up to 4 photos</h3>
+            <div class="col-12 ">
+                <div class="mb-2">
+                    <input type="file" class="form-control border-bottom border-primary" name="image1" required>
+                </div>
+                <div class="mb-2">
+                    <input type="file" class="form-control border-bottom border-primary" name="image2" required>
+                </div>
+                <div class="mb-2">
+                    <input type="file" class="form-control border-bottom border-primary" name="image3" required>
+                </div>
+                <div class="mb-2">
+                    <input type="file" class="form-control border-bottom border-primary" name="image4" required>
+              </div>
+
+            </div>
+
+            <div class="h4 pb-2 mb-4 border-bottom border-dark mt-5">
+            </div>
+
+              <div class="col-12 ">
+                <h3>Contact Details</h3>
+                <div class="px-0">
+                    <p class="text-secondary">Name</p>
+                    <h6><%= user.username %> </h6>
+                </div>
+                <div>
+                    <p class="text-secondary">Email</p>
+                    <h6><%= user.email %></h6>
+                </div>
+                <label for="addNumber" class="form-label mt-3"></i>Add phone Number</label>
+                <div class="numberList">
+                    <div class="numberDiv mt-1">
+                      <input type="number" name="pNumber" class="form-control border-dark border-1" id="addNumber" aria-describedby="numberHelp" required>
+                    </div>
+                </div>
+                <div>
+                  <button type="button" class="mt-4 mb-3 col-12 btn btn-outline-primary" id="addPhoneNumberBtn" style="width: 10rem;">Add +</button>
+                </div>
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" required>
+                    <label class="form-check-label" for="flexCheckIndeterminate" >
+                        I have read and accept the <a href="" style="text-decoration: none;">Terms and Conditions</a>
+                    </label>
+                </div>
+              </div>
+            
+              <button type="submit" class="btn mt-4 col-12 btn-primary" style="width: 10rem;">Post ad</button>
+
+            </div>
+          </form>
+    </div>
+    </div>
+
+
+    <!-- script for add multuple number  -->
+    <script>
+      let addPhoneNumberBtn = document.getElementById('addPhoneNumberBtn');
+      let numberList = document.querySelector('.numberList');
+      let numberDiv = document.querySelectorAll('.numberDiv')[0];
+
+      addPhoneNumberBtn.addEventListener('click', function(){
+
+        let newNumber = numberDiv.cloneNode(true);
+        let input = newNumber.getElementsByTagName('input')[0];
+        input.value = '';
+        numberList.appendChild(newNumber);
+  });
+
+    let phone = document.getElementById('addNumber');
+
+    phone.addEventListener('input', function(){
+
+      if(phone.value.length<11 || phone.value.length>11 ){
+        
+        phone.style.color= "red";
+      }
+      else{
+        phone.style.color= "green";
+      }
+    })
+
+  </script>
+
+<script type="text/javascript">
+  function divide() {
+      var txt;
+      txt = document.getElementById('a').value;
+      var text = txt.split(".");
+      var str = text.join('.</br>');
+      document.write(str);
+  }
+</script>
+  
+    
+<!-- footer start  -->
+    <%- include('footer'); -%> 
+<!-- footer end  -->
+  

@@ -63,6 +63,10 @@ a{
     background-color: #324c81;
 }
 
+/* ads form  */
+.form-container{
+    width: 80%;
+}
 
 
 @media screen and (max-width: 576px) {
@@ -79,6 +83,9 @@ a{
     .location-name{
         font-size: 10px;
         font-weight: 500;
+    }
+    .form-container{
+        width: 95%;
     }
 }
 
@@ -152,4 +159,15 @@ a{
     height: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+/* ads page  */
+.ads-field{
+    width: 40%;
+}
+
+@media screen and (max-width: 768px) {
+    .ads-field{
+        width: 100%;
+    }
 }

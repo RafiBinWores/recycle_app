@@ -4,7 +4,7 @@
 
   <div class="category-container">
     <div class="container mt-5 pt-5">
-        <h3 class="category-title">name</h3>
+      <h3 class="category-title"><%= user.username %> </h3>
     </div>
       
         <div class="container d-flex gap-5 pt-3 flex-c">
@@ -16,7 +16,10 @@
                   <% if(userInformation.useremail) { %>
             
                     <a href="/userProfile/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">Profile</a>
+        
                     <a href="/userAds/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">My Ads</a>
+        
+                    <a href="/changePassword" class="d-flex ms-2 mb-3" style="font-size: 15px">Change Password</a>
           
                     <% } %> 
                     <a class="d-flex ms-2 " style="font-size: 15px;" href="#" onclick="UserLogout()">Logout</a>
@@ -25,7 +28,7 @@
             
           </div>
         
-            <div class="continer">
+            <div class="container">
               <div class="row">
                 <div class="col-12 mb-4 text-center">
                   <h5>My Ads</h5>
@@ -35,13 +38,13 @@
                 <% if(typeof userProduct !== 'undefined' && userProduct.length > 0) {%> 
                   <% userProduct.forEach(function(product, index) {%> 
                     
-                  <div class="col-6 col-md-4 col-lg-3">
-                    <a href="/product/<%= product.ownerId %>" class="card border-primary h-80 rounded mx-auto d-block shadow p-3 mb-5 bg-body rounded" style="max-width: 15rem; max-height: 18rem;">
+                  <div class="col-sm-12 col-md-6 col-lg-4">
+                    <a href="/product/<%= product._id %>" class="card border-primary h-80 rounded mx-auto d-block shadow p-3 mb-5 bg-body rounded" style="max-width: 15rem; max-height: 18rem;">
                       <img src="/uploads/<%= product.image1 %>" class="card-img-top rounded img-size" alt="...">
                       <div class="card-body">
                         <h6 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><%= product.name %></h6>
                         <p class="text-primary">৳ <%= product.price %></p>
-                        <p class="d-flex justify-content-between text-secondary pt-2"><small ><%= product.location %></small> <small>1 hour</small></p>
+                        <p class="d-flex justify-content-between text-secondary pt-2"><small ><%= product.location %></small> <small><%= new Date(product.createdAt).toLocaleDateString(); %></small></p>
                       </div>
                     </a>
                   </div>

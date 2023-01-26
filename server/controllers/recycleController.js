@@ -16,6 +16,8 @@ const Category = require('../models/Category');
 const Location = require('../models/Location');
 const Product = require('../models/Product');
 const { search } = require('../routes/recycleRoutes');
+const { ObjectID } = require('bson');
+const Rent = require('../models/Rent');
 
 
 let transporter = nodemailer.createTransport({
@@ -41,9 +43,12 @@ exports.homepage = async(req, res) => {
         const latest = await Product.find({}).sort({_id: -1});
         const usedProduct = { latest };
 
-        res.render('index', { title: 'Recycle | Home Page', categories, usedProduct});
+        const rent_latest = await Rent.find({}).sort({_id: -1});
+        const rentProduct = { rent_latest };
+
+        res.render('index', { title: 'Recycle | Home Page', categories, usedProduct, rentProduct});
     } catch (error) {
-        res.status(500).send({message: error.message || "Error Occured"});
+        res.status(500).send({message: error.message || "Error Occurred"});
     }
 }
 
@@ -55,9 +60,11 @@ exports.productDetails = async(req, res) => {
 
         const product = await Product.findById(productId);
 
-        res.render('product', { title: 'Recycle | single ad page', product});
+        const user = await User.findById(product.ownerId);
+
+        res.render('product', { title: 'Recycle | single ad page', product, user});
     } catch (error) {
-        res.status(500).send({message: error.message || "Error Occured"});
+        res.status(500).send({message: error.message || "Error Occurred"});
     }
 }
 
@@ -121,25 +128,143 @@ exports.searchProduct = async(req, res) =>{
         res.render('search', {title: 'Recycle | Search', product, categories, locations, searchItem});
     } catch (error) {
 
-        res.status(500).send({message: error.message || "Error Occured"});
+        res.status(500).send({message: error.message || "Error Occurred"});
+    }
+
+}
+
+// get open ads form
+exports.adsPage = async(req,res) => {
+
+    res.render('ads', {title: 'Recycle | Post Your Ads'});
+}
+
+// get // open the sell form 
+exports.openSellForm = async(req,res) => {
+
+    try {
+
+        const user = await User.findById(req.params.id);
+        // console.log(user)
+
+        const infoErrorsObj = req.flash('infoErrors')
+        const infoSubmitObj = req.flash('infoSubmit')
+
+    res.render('postAds', {title: 'Recycle | Post Your Ads', user, infoErrorsObj, infoSubmitObj});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occurred"});
     }
 
 }
 
 
+// post // post ad form
+exports.postAdsForm = async(req,res) => {
+
+    try {
+
+        let Id = req.body.user_id;
+
+        let imageUploadFile1;
+        let uploadPath1;
+        let newImageName1;
+
+        let imageUploadFile2;
+        let uploadPath2;
+        let newImageName2;
+
+        let imageUploadFile3;
+        let uploadPath3;
+        let newImageName3;
+        
+        let imageUploadFile4;
+        let uploadPath4;
+        let newImageName4;
+
+        if(!req.files || Object.keys(req.files).length == 0){
+        console.log('No Files uploaded.');
+        } else {
+
+            imageUploadFile1 = req.files.image1;
+            imageUploadFile2 = req.files.image2;
+            imageUploadFile3 = req.files.image3;
+            imageUploadFile4 = req.files.image4;
+
+            newImageName1 = Date.now() + imageUploadFile1.name;
+            newImageName2 = Date.now() + imageUploadFile2.name;
+            newImageName3 = Date.now() + imageUploadFile3.name;
+            newImageName4 = Date.now() + imageUploadFile4.name;
+
+            uploadPath1 = require('path').resolve('./') + '/public/uploads/' + newImageName1;
+            uploadPath2 = require('path').resolve('./') + '/public/uploads/' + newImageName2;
+            uploadPath3 = require('path').resolve('./') + '/public/uploads/' + newImageName3;
+            uploadPath4 = require('path').resolve('./') + '/public/uploads/' + newImageName4;
+
+            imageUploadFile1.mv(uploadPath1, function(err){
+                if(err) return res.status(500).send(err);
+            })
+            imageUploadFile2.mv(uploadPath2, function(err){
+                if(err) return res.status(500).send(err);
+            })
+            imageUploadFile3.mv(uploadPath3, function(err){
+                if(err) return res.status(500).send(err);
+            })
+            imageUploadFile4.mv(uploadPath4, function(err){
+                if(err) return res.status(500).send(err);
+            })
+        }
+        
+        const newProduct = new Product({
+
+            ownerId: req.user.userid,
+            ownerName: req.user.username,
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category,
+            location: req.body.location,
+            image1: newImageName1,
+            image2: newImageName2,
+            image3: newImageName3,
+            image4: newImageName4,
+            brand: req.body.brand,
+            description: req.body.description,
+            pNumber: req.body.pNumber,
+               
+        });
+
+        await newProduct.save();
+      
+        req.flash('infoSubmit', 'Product has been added.');
+        res.redirect(`/postAds/${req.body.user_id}`);
+    } catch (error) {
+
+        req.flash('infoErrors', error);
+        res.redirect('postAds');
+    }
+}
+
 
 // get // open the sell form 
-exports.openSellForm = async(req,res) => {
+exports.openRentForm = async(req,res) => {
 
-    const infoErrorsObj = req.flash('infoErrors')
-    const infoSubmitObj = req.flash('infoSubmit')
+    try {
+        
+        const user = await User.findById(req.params.id);
+        // console.log(user)
 
-    res.render('postAds', {title: 'Recycle | Post Your Ads', infoErrorsObj, infoSubmitObj});
+        const infoErrorsObj = req.flash('infoErrors')
+        const infoSubmitObj = req.flash('infoSubmit')
+
+    res.render('postRentAds', {title: 'Recycle | Post Your Ads', user, infoErrorsObj, infoSubmitObj});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occurred"});
+    }
+
 }
 
 
 // post // post ad form
-exports.postAdsForm = async(req,res) => {
+exports.postRentAdsForm = async(req,res) => {
 
     try {
 
@@ -179,25 +304,23 @@ exports.postAdsForm = async(req,res) => {
             uploadPath4 = require('path').resolve('./') + '/public/uploads/' + newImageName4;
 
             imageUploadFile1.mv(uploadPath1, function(err){
-                if(err) return res.satus(500).send(err);
+                if(err) return res.status(500).send(err);
             })
             imageUploadFile2.mv(uploadPath2, function(err){
-                if(err) return res.satus(500).send(err);
+                if(err) return res.status(500).send(err);
             })
             imageUploadFile3.mv(uploadPath3, function(err){
-                if(err) return res.satus(500).send(err);
+                if(err) return res.status(500).send(err);
             })
             imageUploadFile4.mv(uploadPath4, function(err){
-                if(err) return res.satus(500).send(err);
+                if(err) return res.status(500).send(err);
             })
         }
         
-        const newProduct = new Product({
+        const newRentProduct = new Rent({
 
             ownerId: req.user.userid,
-            ownerName: req.user.username,
-            ownerEmail: req.user.email,
-            name: req.body.name,
+            title: req.body.title,
             price: req.body.price,
             category: req.body.category,
             location: req.body.location,
@@ -211,39 +334,24 @@ exports.postAdsForm = async(req,res) => {
                
         });
 
-        await newProduct.save();
+        await newRentProduct.save();
       
         req.flash('infoSubmit', 'Product has been added.');
-        res.redirect('postAds');
+        res.redirect(`/postRentAds/${req.body.user_id}`);
     } catch (error) {
-
         req.flash('infoErrors', error);
-        res.redirect('postAds');
+        res.redirect('postRentAds');
     }
 }
+
 
 //get //profilePage
 exports.profilePage = async(req, res) =>{
     res.render('userProfile', {title: 'Recycle | Profile page'});
 }
 
-//put // userProfile page // update
-exports.updateProfileById = async(req, res) =>{
 
-    try {
-        
-            const userUpdate = await User.findByIdAndUpdate({_id: req.body.user_id},{$set: {username:req.body.username} });
-
-        res.redirect('userProfile');
-
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error Occured"});
-        res.redirect('userProfile')
-    }
-
-}
-
-//get // userProfile page 
+//get // userProfile page by id
 exports.profilePage = async(req, res) =>{
 
     try {
@@ -251,35 +359,74 @@ exports.profilePage = async(req, res) =>{
 
         res.render('userProfile', {title: 'Recycle | Profile page', user});
     } catch (error) {
-        res.status(500).send({message: error.message || "Error Occured"});
+        res.status(500).send({message: error.message || "Error Occurred"});
     }
 
 }
 
+//put // userProfile page // update
+exports.updateProfileById = async(req, res) =>{
+
+    try {
+        
+        const userUpdate = await User.findByIdAndUpdate({_id: req.body.user_id},{$set: {username:req.body.username}});
+
+        res.redirect(`/userProfile/${req.body.user_id}`);
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occurred"});
+        res.redirect('userProfile')
+    }
+
+}
 
 
 //get // user ads page //by id
 exports.userAdsPage = async(req, res) =>{
 
     try {
-        let productId = req.params.id;
+        let owner_id = req.params.id;
 
-        const userProduct = await Product.find({'product': productId}).sort({_id: -1});
+        const user = await User.findById(owner_id);
+        // console.log(user)
 
-        res.render('userAds', {title: 'Recycle | Your Ads', userProduct});
+        const userProduct = await Product.find({'ownerId': owner_id}).sort({_id: -1});
+
+        res.render('userAds', {title: 'Recycle | Your Ads', userProduct, user});
     } catch (error) {
-        res.status(500).send({message: error.message || "Error Occured"});
+        res.status(500).send({message: error.message || "Error Occurred"});
     }
   
 }
 
+//change password page
+exports.changePasswordPage = async(req, res) =>{
+    
+    try {
+        const pass = await User.findById(req.params.id);
+
+        res.render('changePassword', {title: 'Recycle | Change password', pass});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error Occurred"});
+    }
+}
+
+
+//post // password page // update
+// exports.updatePassword = async(req, res) =>{
+//     try {
+//         const userId =      
+//     } catch (error) {
+        
+//     }
+
+// }
 
 
 
 //get // mail confirmation page
 exports.mailConfirmationStatusPage = async(req, res) =>{
 
-    res.render('mailConfirmation', {title: 'Recycle | Verify your email addess'});
+    res.render('mailConfirmation', {title: 'Recycle | Verify your email address'});
 }
 
 
@@ -365,7 +512,7 @@ exports.userPostRegister = async(req,res) => {
         {
             console.log(error);
             res.render("register",{
-                message: "Unknown error occured"
+                message: "Unknown error occurred"
             })
         }
     }

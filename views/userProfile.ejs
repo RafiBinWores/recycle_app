@@ -14,14 +14,16 @@
       <div class="sidebar-profile-menu">
         <h6 class="mb-3 border-bottom border-dark">Account</h6>
         <div class="sidebar-category-link">
-
+            
           <% if(userInformation.useremail) { %>
             
-          <a href="/userProfile/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">Profile</a>
+            <a href="/userProfile/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">Profile</a>
 
-          <a href="/userAds/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">My Ads</a>
+            <a href="/userAds/<%= userInformation.userid %>" class="d-flex ms-2 mb-3" style="font-size: 15px">My Ads</a>
 
-          <% } %> 
+            <a href="/changePassword" class="d-flex ms-2 mb-3" style="font-size: 15px">Change Password</a>
+  
+            <% } %> 
 
           <a
             class="d-flex ms-2"
@@ -59,57 +61,17 @@
                 Choose a file
               </label>
             </div>
+
             <div class="mt-4">
               <h6>Username</h6>
               <input type="text" name="username" value="<%= user.username %>" class="form-control mx-auto border-primary mt-3" id="" placeholder="Your Name" style="width: 20rem" />
             </div>
+
             <div class="mt-4">
               <input type="hidden" name="user_id" id="" value="<%= user._id %>">
             </div>
-            <button type="submit" class="btn btn-info mt-4" style="width: 20rem">
-              Update details
-            </button>
-          </form>
-        </div>
 
-
-        <div class="col-12 mt-5">
-          <h6>Change Password</h6>
-          <form
-            action=""
-            method="post"
-            class="mx-auto mt-3"
-            style="width: 20rem"
-          >
-            <div class="mb-4">
-              <input
-                type="password"
-                name="password"
-                class="form-control border-primary"
-                id="exampleInputPassword1"
-                placeholder="New Password"
-              />
-            </div>
-            <div class="mb-4">
-              <input
-                type="password"
-                name="cPassword"
-                class="form-control border-primary"
-                id="exampleInputPassword1"
-                placeholder="Confirm Password"
-              />
-              <div id="emailHelp" class="form-text">
-                Password must be 8 digit long.
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              class="btn btn-info mt-3 mb-5"
-              style="width: 100%"
-            >
-              Change Password
-            </button>
+            <button type="submit" class="btn btn-primary mt-4 mb-5" style="width: 20rem">Update details</button>
           </form>
         </div>
       </div>
