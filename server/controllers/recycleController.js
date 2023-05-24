@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const multer  = require("multer");
+
 /* models */
 const User = require('../models/User');
 const UserVerification = require('../models/UserVerification');
@@ -43,10 +44,10 @@ exports.homepage = async(req, res) => {
         const latest = await Product.find({}).sort({_id: -1});
         const usedProduct = { latest };
 
-        const rent_latest = await Rent.find({}).sort({_id: -1});
-        const rentProduct = { rent_latest };
+        // const rent_latest = await Rent.find({}).sort({_id: -1});
+        // const rentProduct = { rent_latest };
 
-        res.render('index', { title: 'Recycle | Home Page', categories, usedProduct, rentProduct});
+        res.render('index', { title: 'Recycle | Home Page', categories, usedProduct});
     } catch (error) {
         res.status(500).send({message: error.message || "Error Occurred"});
     }
@@ -57,10 +58,13 @@ exports.productDetails = async(req, res) => {
 
     try {
         let productId = req.params.id;
+        // let rentId = req.params.id;
 
         const product = await Product.findById(productId);
+        // const rent = await Rent.findById(rentId);
 
         const user = await User.findById(product.ownerId);
+        // const rentUser = await User.findById(rent.ownerId);
 
         res.render('product', { title: 'Recycle | single ad page', product, user});
     } catch (error) {
@@ -204,7 +208,7 @@ exports.postAdsForm = async(req,res) => {
                 if(err) return res.status(500).send(err);
             })
             imageUploadFile2.mv(uploadPath2, function(err){
-                if(err) return res.status(500).send(err);
+                if(err) return res.status(500).send(err); 
             })
             imageUploadFile3.mv(uploadPath3, function(err){
                 if(err) return res.status(500).send(err);
@@ -684,9 +688,6 @@ exports.LogoutUser = async (req,res) =>{
     res.clearCookie(process.env.COOKIE_NAME);
     res.send("signing out")
 }
-
-
-
 
 
 

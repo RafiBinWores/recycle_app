@@ -1,0 +1,24 @@
+<% if(rentProduct !='' ) { %>
+          <% rentProduct.rent_latest.forEach(function(rent, index) { %>
+
+            <div class="col-6 col-md-4 col-lg-3">
+              <a href="/product/<%= rent._id %>"
+                class="card border-primary h-80 rounded mx-auto d-block shadow p-3 mb-5 bg-body rounded"
+                style="max-width: 15rem; max-height: 18rem;">
+                <img src="/uploads/<%= rent.image1 %>" class="card-img-top rounded img-size" alt="<%= rent.name %>">
+                <div class="card-body">
+                  <h6 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                    <%= rent.title %>
+                  </h6>
+                  <p class="text-primary">৳ <%= rent.price %>
+                  </p>
+                  <p class="d-flex justify-content-between text-secondary pt-1 location-name"><small>
+                      <%= rent.location %>
+                    </small> <small>
+                      <%= new Date(rent.createdAt).toLocaleDateString(); %>
+                    </small></p>
+                </div>
+              </a>
+            </div>
+            <% }) %>
+              <% } %>
