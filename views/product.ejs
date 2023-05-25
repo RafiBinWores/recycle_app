@@ -4,65 +4,75 @@
 
 <%- include('navbar'); -%>
 
-<!-----------------------------
+    <!-----------------------------
         navbar end 
 ---------------------------->
 
-<% if(product != '') {%>
+    <% if(product !='' ) {%>
 
-    <!-- <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb" class="container mt-5 pt-5">
+        <!-- <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb" class="container mt-5 pt-5">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item active" aria-current="page"></li>
         </ol>
       </nav> -->
 
-<div class="container mt-5 pt-5 mb-5">
-    <div class="row gy-5">
-        <div class="col-12 col-lg-6">
-          <img src="/uploads/<%= product.image1 %>" alt="<%- product.name %>" class=" single-ad-img-size rounded" id="coverImg">
+        <div class="container mt-5 pt-5 mb-5">
+            <div class="row gy-5">
+                <div class="col-12 col-lg-6">
+                    <img src="/uploads/<%= product.image1 %>" alt="<%- product.name %>"
+                        class=" single-ad-img-size rounded" id="coverImg">
 
-            <div class="row mt-3">
-                <div class="col-3">
-                    <img src="/uploads/<%= product.image1 %>" class="single-page-img" onclick="clickimg(this)" alt="<%- product.name %>">
-                </div>
-                <div class="col-3">
-                    <img src="/uploads/<%= product.image2 %>" class="single-page-img" onclick="clickimg(this)" alt="<%- product.name %>">
-                </div>
-                <div class="col-3">
-                    <img src="/uploads/<%= product.image3 %>" class="single-page-img" onclick="clickimg(this)"  alt="<%- product.name %>">
-                </div>
-                <div class="col-3">
-                    <img src="/uploads/<%= product.image4 %>" class="single-page-img" onclick="clickimg(this)"  alt="<%- product.name %>">
-                </div>
-            </div>
+                    <div class="row mt-3">
+                        <div class="col-3">
+                            <img src="/uploads/<%= product.image1 %>" class="single-page-img" onclick="clickimg(this)"
+                                alt="<%- product.name %>">
+                        </div>
+                        <div class="col-3">
+                            <img src="/uploads/<%= product.image2 %>" class="single-page-img" onclick="clickimg(this)"
+                                alt="<%- product.name %>">
+                        </div>
+                        <div class="col-3">
+                            <img src="/uploads/<%= product.image3 %>" class="single-page-img" onclick="clickimg(this)"
+                                alt="<%- product.name %>">
+                        </div>
+                        <div class="col-3">
+                            <img src="/uploads/<%= product.image4 %>" class="single-page-img" onclick="clickimg(this)"
+                                alt="<%- product.name %>">
+                        </div>
+                    </div>
 
-        </div>
-        <div class="col-12 col-lg-6">
-            <div>
-                <h3><%- product.name %></h4>
-                <h5 class="mt-4 text-primary">TK: <%- product.price %></h6>
-                <p class="mt-3 d-flex justify-content-between text-secondary"><small><%= product.location %></small> <small><%= new Date(product.createdAt).toLocaleDateString(); %></small></p>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div>
+                        <h3><%- product.name %></h4>
+                                <h5 class="mt-4 text-primary">TK: <%- product.price %></h6>
+                                        <p class="mt-3 d-flex justify-content-between text-secondary"><small>
+                                                <%= product.location %>
+                                            </small> <small>
+                                                <%= new Date(product.createdAt).toLocaleDateString(); %>
+                                            </small></p>
+                    </div>
+                    <div class="h4 pb-2 mb-4 border-bottom border-dark mt-2">
+                    </div>
+                    <div>
+                        <p class="text-body fw-semibold">Seller: <%= user.username %>
+                        </p>
+                        <p>Number: <%- product.pNumber %></p>
+                        <button type="button" class="btn btn-primary" style="width: 100%;">Chat with seller</button>
+                    </div>
+                </div>
             </div>
-            <div class="h4 pb-2 mb-4 border-bottom border-dark mt-2">
-            </div>
-            <div>
-                <p class="text-body fw-semibold">Seller: <%= user.username %></p>
-                <p>Number: <%- product.pNumber %></p>
-                <button type="button" class="btn btn-primary" style="width: 100%;">Chat with seller</button>
-            </div>
-        </div>
-      </div>
-      <div class="col-12 col-lg-6 mt-5 mb-3">
-        <div>
-            <h4>Details</h4>
-            <p class="mt-3">Brand: <%- product.brand %></p>
-        </div>
-            <div class="h4 pb-2 mb-4 border-bottom border-dark mt-2">
-            </div>
-        <div>
-            <h4>Description</h4>
-            <p class="mt-3"><%- product.description %></p>
+            <div class="col-12 col-lg-6 mt-5 mb-3">
+                <div>
+                    <h4>Details</h4>
+                    <p class="mt-3">Brand: <%- product.brand %></p>
+                </div>
+                <div class="h4 pb-2 mb-4 border-bottom border-dark mt-2">
+                </div>
+                <div>
+                    <h4>Description</h4>
+                    <pre class="mt-3"><%- product.description %></p>
         </div>
       </div>
 </div>
